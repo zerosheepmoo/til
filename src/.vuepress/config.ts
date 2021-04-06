@@ -40,7 +40,8 @@ export default defineUserConfig<DefaultThemeOptions>({
                     children: [
                         'README.md',
                         'intro.md',
-                        'config.md'
+                        'config.md',
+                        'config2.md'
                     ]
                 }
             ],
@@ -66,6 +67,8 @@ export default defineUserConfig<DefaultThemeOptions>({
     },
     extendsMarkdown: (md) => {
         let footnote = require('markdown-it-footnote');
+        let multitable = require('markdown-it-multimd-table');
         md.use(footnote);
+        md.use(multitable, {multiline: true, rowspan: true});
     },
 });
