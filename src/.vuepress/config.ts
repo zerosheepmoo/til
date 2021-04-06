@@ -5,11 +5,11 @@ export default defineUserConfig<DefaultThemeOptions>({
     lang: 'ko-KR',
     title: 'TIL',
     description: '오늘 내가 배운 것들',
-
+    base: '/til/',
+    dest: './dist',
     themeConfig: {
-
         editLink: false,
-        repo: 'zerosheepmoo/pep8-in-korean',
+        repo: 'zerosheepmoo/til',
         home: '/',
         logo: '/images/logo.png',
         navbar: [
