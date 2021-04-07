@@ -1,11 +1,18 @@
 # Configuration -1-
 
-## 의도
+## 작성의도
 
 - 공식사이트에 설명이 잘되어있다.
 - 하지만, 헷갈리거나 이해가 어려웠던 부분도 분명히 있다.
 - 또, 기억이 잘 안나거나 자주 까먹는데 번거롭게 찾게 되는 부분도 있었다.
 - 이에 대해 서술하였다.
+
+## 간략히
+
+- 루트 오브젝트를 **Vuepress Config** 오브젝트라 하자.
+- Config Scope 는 크게 **Theme Config** 와 **Site Config** 로 나뉘는데,
+  이는 `themeConfig` option 의 내부냐 외부냐에 따라 나뉜다.
+- 타입스크립트로 `config.ts` 를 생성할 경우, config 오브젝트의 타입명은 **UserConfig** 다.
 
 ## config.ts 구조
 

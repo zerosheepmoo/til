@@ -41,7 +41,9 @@ export default defineUserConfig<DefaultThemeOptions>({
                         'README.md',
                         'intro.md',
                         'config.md',
-                        'config2.md'
+                        'config2.md',
+                        'config3.md',
+                        'i18n.md'
                     ]
                 }
             ],
