@@ -23,6 +23,9 @@ export default defineUserConfig<DefaultThemeOptions>({
         home: '/',
         logo: '/images/logo.png',
         editLink: false,
+        contributors: false,
+        notFound: ['잘못 들어왔졍ㅠ'],
+        backToHome: '돌아가자...',
         // multilang
         locales: {
             '/': {
@@ -88,7 +91,7 @@ export default defineUserConfig<DefaultThemeOptions>({
             '/en/': {
                 selectLanguageName: 'English',
             }
-        }
+        },
     },
     // plugin API
     extendsMarkdown: (md) => {

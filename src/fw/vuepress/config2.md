@@ -252,4 +252,5 @@ export interface LessLoaderOptions extends LoaderOptions {
 
 ## Plugin API
 
+- `name`과 `multiple` 옵션을 제외하고는 plugin api 에서 사용할 수 있는 옵션과 동일하다.
 - [Plugin API](./plugin-api.md) 참조
