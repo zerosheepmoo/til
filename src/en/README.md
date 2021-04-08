@@ -5,18 +5,18 @@ heroAlt: til-logo
 heroText: TIL
 tagline: Today I Learned
 actions:
-  - text: 둘러보기
-    link: /study/
+  - text: See
+    link: /en/study/
     type: primary
-  - text: 프레임워크
+  - text: Framework
     link: /fw/
     type: secondary
 features:
   - title: Steady
-    details: 꾸준하게
+    details: be steady
   - title: Simple
-    details: 간단하게
+    details: be simple
   - title: Semantic
-    details: 의미있게
+    details: be semantic
 footer: MIT Licensed | Copyright © 2021 made by zerosheepmoo
 ---

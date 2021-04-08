@@ -2,75 +2,99 @@ import { defineUserConfig } from 'vuepress'
 import type { DefaultThemeOptions } from 'vuepress'
 
 export default defineUserConfig<DefaultThemeOptions>({
-    lang: 'ko-KR',
+    // siteConfig
     title: 'TIL',
     description: '오늘 내가 배운 것들',
     base: '/til/',
+    // directory config
     dest: './dist',
+    locales: {
+        '/': {
+            lang: 'ko-KR',
+        },
+        '/en/': {
+            lang: 'en-US',
+        },
+    },
+    // theme config
     themeConfig: {
-        editLink: false,
+        lastUpdated: true,
         repo: 'zerosheepmoo/til',
         home: '/',
         logo: '/images/logo.png',
-        navbar: [
-            {
-                text: 'Study',
-                link: '/study/'
+        editLink: false,
+        // multilang
+        locales: {
+            '/': {
+                selectLanguageName: '한국어',
+                navbar: [
+                    {
+                        text: 'Study',
+                        link: '/study/'
+                    },
+                    {
+                        text: 'Framework',
+                        children: [
+                            {
+                                text: 'Vuepress',
+                                link: '/fw/vuepress/',
+                            },
+                            {
+                                text: 'Others',
+                                link: '/fw/others/',
+                            },
+                        ]
+                    }
+                ],
+                sidebar: {
+                    '/fw/vuepress/': [
+                        {
+                            isGroup: true,
+                            text: 'Vuepress',
+                            children: [
+                                'README.md',
+                                'intro.md',
+                                'config.md',
+                                'config2.md',
+                                'config3.md',
+                                'plugin-api.md',
+                                'assets.md',
+                                'bundler.md',
+                                'frontmatter.md',
+                                'i18n.md',
+                            ]
+                        }
+                    ],
+                    '/fw/others/': [
+                        {
+                            isGroup: true,
+                            text: 'Others',
+                            children: [
+                                'README.md'
+                            ]
+                        }
+                    ],
+                    '/study/': [
+                        {
+                            text: 'Study',
+                            isGroup: true,
+                            children: [
+                                'README.md'
+                            ]
+                        }
+                    ],
+                },
             },
-            {
-                text: 'Framework',
-                children: [
-                    {
-                        text: 'Vuepress',
-                        link: '/fw/vuepress/',
-                    },
-                    {
-                        text: 'Others',
-                        link: '/fw/others/',
-                    },
-                ]
+            '/en/': {
+                selectLanguageName: 'English',
             }
-        ],
-        lastUpdated: true,
-        sidebar: {
-            '/fw/vuepress/': [
-                {
-                    isGroup: true,
-                    text: 'Vuepress',
-                    children: [
-                        'README.md',
-                        'intro.md',
-                        'config.md',
-                        'config2.md',
-                        'config3.md',
-                        'i18n.md'
-                    ]
-                }
-            ],
-            '/fw/others/': [
-                {
-                    isGroup: true,
-                    text: 'Others',
-                    children: [
-                        'README.md'
-                    ]
-                }
-            ],
-            '/study/': [
-                {
-                    text: 'Study',
-                    isGroup: true,
-                    children: [
-                        'README.md'
-                    ]
-                }
-            ],
         }
     },
+    // plugin API
     extendsMarkdown: (md) => {
         let footnote = require('markdown-it-footnote');
         let multitable = require('markdown-it-multimd-table');
         md.use(footnote);
-        md.use(multitable, {multiline: true, rowspan: true});
+        md.use(multitable, { multiline: true, rowspan: true });
     },
 });

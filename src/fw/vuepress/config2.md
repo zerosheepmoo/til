@@ -3,9 +3,17 @@
 > Theme Config 를 제외한 나머지는 root 의 property 이며, Theme Config 는 themeConfig 프로퍼티의 value
 > 인 오브젝트의 property 다.
 
-## Site Config
+크게 알아야할 Config 는 **7**개다. 그중 **2개: Site, Theme** 이 가장 중요하다.
 
-### Site Config Table
+- Site Config
+- Theme Config
+- Directory Config
+- Bundler Config
+- Development Config
+- Markdown Config
+- Plugin API
+
+## Site Config
 
 |     name    |     type    |   default  |   details  |
 | :-----------: | :-----------: | :----------: | ---------- |
@@ -179,8 +187,6 @@ export interface LessLoaderOptions extends LoaderOptions {
 
 ## Directory Config
 
-### Direcotry Config Table
-
 |     name    |     type    |   default  |   details  |
 | :-----------: | :-----------: | :----------: | ---------- |
 |`dest`|`string`|``${sourceDir}/.vuepress/dist``|- 빌드(build) 아웃풋 경로|
@@ -197,6 +203,53 @@ export interface LessLoaderOptions extends LoaderOptions {
 - Details
   - `markdown.anchor`: `AnchorPluginOptions | false` / [markdown-it-anchor 옵션](https://github.com/valeriangalliat/markdown-it-anchor)
   - `markdown.assets`: `AssetsPluginOptions | false` /
-    built-in markdown-it assets plugin
-  - `markdown.code`: `CodePluginOptions | false` / built-in markdown-it code plugin
-  - `markdown.code.highlightLines`: `boolean` / Default: `true` / 코드 하이라이팅
+    built-in markdown-it assets plugin / 함부로 끄지 말것
+  - `markdown.code`: `CodePluginOptions | false` / 빌트인 markdown-it code 플러그인
+    - `markdown.code.highlightLines`: `boolean` / Default: `true` / 코드 줄 하이라이팅
+    - `markdown.code.lineNumbers`: `boolean` / Default: `true` / 코드 라인 넘버
+    - `markdown.code.preWrapper`: `boolean` / Default: `true` / extra \<pre> tag
+      - highlightLines 와 lineNumbers 의 선제조건. 따라서 disable 시 이 둘도 disable.
+      - Prismjs 의 기능을 이용할 때 사용가능
+    - `markdown.code.vPre`: `boolean` / Default: `true` / enable v-pre on \<pre>
+  - `markdown.customComponent`: `undefined | false` / 빌트인 markdown-it custom-component
+    plugin / 함부로 끄지 말것
+  - `markdown.emoji`: `EmojiPluginOptions | false` / markdown-it-emoji
+  - `markdown.extractHeaders`: `ExtractHeadersPluginOptions | false` /
+    빌트인 markdown-it extract-headers plugin. 페이지 헤더를 페이지 데이터에 추출하는데, 사이드바,
+    toc 등 여러 군데에 쓰인다.
+  - `markdown.hoistTags`: `HoistTagsPluginOptions | false` / 빌트인 markdown-it
+    hoist-tags plugin. 특정 HTML 태그를 마크다운에서 SFC 의 top-level 에 hoist 한다. [참고](https://vuepress2.netlify.app/guide/advanced/markdown.html)
+  - `markdown.links`: `LinksPluginOptions | false` / 빌트인 markdown-it links plugin.
+    internal link 를 \<RouterLink>로 convert 후 추가적인 어트리뷰트를 external links에 단다.
+  - `markdown.toc`: `TocPluginOptions | false` / 빌트인 markdown-it
+    table-of-contents plugin.
+- More
+  - [markdown-it > Init with presets and options](https://github.com/markdown-it/markdown-it#init-with-presets-and-options)
+  - [syntax extension guide](https://vuepress2.netlify.app/guide/markdown.html#syntax-extensions)
+
+## Development Config
+
+|     name    |     type    |   default  |   details  |
+| :-----------: | :-----------: | :----------: | ---------- |
+|`debug`|`boolean`|`false`| - 디버그모드 / `DEBUG=vuepress*` 환경변수 설정도 가능 |
+|`host`|`string`|`'0.0.0.0'`|- dev server 호스트|
+|`port`|`number`|`8080`| - dev server 포트|
+|`open`|`boolean`|`false`| - dev server 실행 시 브라우저 자동 열기|
+|`evergreen`|`boolean`|`true`| - target evergreen browser[^3] / false 시 최적화용도|
+|`pagePatterns`|`string[]`|하단 참조| - 페이지로 resolve 될 파일명 패턴|
+|`templateDev`|`string`|하단| - dev용 htmltemplate|
+|`templateSSR`|`string`|하단| - build용 htmltemplate|
+|`shouldPreload`|`string`|하단|what files \<link rel="preload"> resource hints generated|
+|`shouldPrefetch`|`string`|하단|what files \<link rel="prefetch"> resource hints generated.|
+
+- pagePatterns: `['**/*.md', '!.vuepress', '!node_modules']`
+- templateDev: `'@vuepress/client/templates/index.dev.html'`
+- templdateSSR: `'@vuepress/client/templates/index.ssr.html'`
+- sholudPreload: `((file: string, type: string) => boolean)) | boolean`
+- shouldPrefetch: `((file: string, type: string) => boolean)) | boolean`
+
+[^3]: Evergreen 브라우저는 자동 업데이트를 하는 브라우저를 말한다. Chrome같은. IE는 evergreen 이 아님.
+
+## Plugin API
+
+- [Plugin API](./plugin-api.md) 참조

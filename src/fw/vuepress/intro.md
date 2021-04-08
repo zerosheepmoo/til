@@ -7,6 +7,7 @@
 - `Configuration -2-`: 전반적인 config option 들
 - `Configuration -3-`: Default Theme Config 관련
 - `I18n`: 다국어지원
+- `Plugin API`: 플러그인 사용법
 
 ## 개인적으로 추가된 기능 중 눈여겨 본 것
 
