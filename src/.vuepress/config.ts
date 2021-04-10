@@ -101,4 +101,12 @@ export default defineUserConfig<DefaultThemeOptions>({
         md.use(footnote);
         md.use(multitable, { multiline: true, rowspan: true });
     },
+    plugins: [
+        [
+            '@vuepress/plugin-google-analytics',
+            {
+                id: 'G-8DQRPD9EMJ',
+            },
+        ],
+    ],
 });
