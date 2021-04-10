@@ -65,6 +65,7 @@ export default defineUserConfig<DefaultThemeOptions>({
                                 'bundler.md',
                                 'frontmatter.md',
                                 'i18n.md',
+                                'config-ts.md'
                             ]
                         }
                     ],
