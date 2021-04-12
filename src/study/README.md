@@ -11,6 +11,10 @@
 마침 이전부터 여기저기서 마주쳤던 TIL 블로그들이 기억났다.
 나도 해보자.
 
+## 포스팅
+
+[포스팅 목록](./../_posts/README.md) 참고
+
 ## 참고
 
 - [markdownlint](https://github.com/DavidAnson/markdownlint) 를 사용
