@@ -101,6 +101,34 @@ export default defineUserConfig<DefaultThemeOptions>({
         md.use(footnote);
         md.use(multitable, { multiline: true, rowspan: true });
     },
+    extendsPageOptions: (filePath) => {
+        if (filePath.startsWith(`_posts/`)) {
+            if (filePath === '_posts/README.md') {
+                return {
+                    frontmatter: {
+                        permalink: '/posts/'
+                    }
+                }
+            }
+            if (filePath.endsWith('README.md')) {
+                
+                let year = filePath.substring(7,11);
+                let month = filePath.substring(11,13);
+                return {
+                    frontmatter: {
+                        permalinkPattern: `/${year}/${month}/`,
+                    }
+                }
+            }
+            return {
+                frontmatter: {
+                    permalinkPattern: '/:year/:month/:day/:slug.html',
+                    sidebar: 'auto'
+                },
+            }
+        }
+        return {}
+    },
     plugins: [
         [
             '@vuepress/plugin-google-analytics',
