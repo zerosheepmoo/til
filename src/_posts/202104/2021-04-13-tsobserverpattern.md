@@ -1,4 +1,4 @@
-# Typescript 로 Observer Pattern 만들기 -1-
+# Typescript 로 Observer Pattern 만들기
 
 > [자바스크립트 디자인패턴 - 옵저버](https://wanago.io/2020/01/20/javascript-design-patterns-observer-typescript/)
 > [타입스크립트 옵저버 패턴](https://medium.com/@pagalvin/implement-the-observer-pattern-in-typescript-f0d4b05807f0)
