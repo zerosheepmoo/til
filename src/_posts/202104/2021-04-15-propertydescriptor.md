@@ -2,7 +2,7 @@
 
 > [프로퍼티 어트리뷰트 ecma262](https://tc39.es/ecma262/#sec-property-attributes)
 >
-> [specification type: Property Descriptor](/til/ecmascript/6-2.html#_6-2-5-the-property-descriptor-specification-type)
+> [specification type: Property Descriptor](/til/ecmascript/6-2.html#_6-2-5-the-property-descriptor-스펙-타입)
 
 ## 의미
 
@@ -41,3 +41,15 @@ Attribute Name | Value Domain | Description |
  | | |- 아닐 경우, 프로퍼티는 non-enumerable 하다고 함.|
 [[Configurable]] | `Boolean` | `false`면 프로퍼티를 삭제하거나, data 프로퍼티로 변경하려 할때,|\
  | | | 또는 그것의 attributes 를 변경하려 할 때 실패한다.|
+
+## etc
+
+- [FromPropertyDescriptor abstract operation](https://es.discourse.group/t/i-am-confused-with-6-2-5-4-frompropertydescriptor/739)
+  - 어처구니 없는 실수. descriptor의 js object representation 을 return 한다는 사실을 인지못했다.
+  - `Object.getOwnPropertyDescriptor` 등에서 사용된다는 점을 명시하자.
+  - [관련소스코드: es-abstract](https://github.com/ljharb/es-abstract/blob/144955764b80341bee97c1773f89142b7e507840/2020/FromPropertyDescriptor.js#L9-L36)
+
+## summary
+
+- Data Property attributes는 [[value]], [[Writable]], [[Enumarable]], [[Configurable]]이다.
+- Accessor Property attributes는 [[Get]], [[Set]], [[Enumarable]], [[Configurable]]이다.
