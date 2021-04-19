@@ -8,3 +8,4 @@
 - [2021년 4월 17일 tc39processdoc](2021-04-17-tc39processdoc.md)
 - [2021년 4월 18일 tsprivateclassfields](2021-04-18-tsprivateclassfields.md)
 - [2021년 4월 19일 typeofvsinstanceof](2021-04-19-uiuxdesigntrends.md)
+- [2021년 4월 20일 typeofintypescript](2021-04-20-typeofintypescript.md)
