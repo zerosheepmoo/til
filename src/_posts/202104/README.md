@@ -9,3 +9,5 @@
 - [2021년 4월 18일 tsprivateclassfields](2021-04-18-tsprivateclassfields.md)
 - [2021년 4월 19일 typeofvsinstanceof](2021-04-19-uiuxdesigntrends.md)
 - [2021년 4월 20일 typeofintypescript](2021-04-20-typeofintypescript.md)
+- [2021년 4월 21일 eventtarget](2021-04-21-eventtarget.md)
+- [2021년 4월 22일 createtriggerevent](2021-04-22-createtriggerevent.md)
