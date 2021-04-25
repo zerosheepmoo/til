@@ -39,8 +39,12 @@ sidebar: 'auto'
 
 ## Shadow Dom
 
+- [shadow DOM 페이지](./wc-shadow-dom.md) 참조
+
 ## Best Practices
+
+- [모범사례 페이지](./wc-best-practices.md) 참조
 
 ## Examples
 
-[^1]: 원문 - Generally, you should try to delay work until this time.
+- [예시 페이지](./wc-examples.md) 참조

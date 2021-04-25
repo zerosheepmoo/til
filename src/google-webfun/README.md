@@ -6,6 +6,6 @@
 
 - [Base Technology](./web-components.md)
   - [custom elements](./wc-custom-elements.md)
-  - [shadow dom]()
-  - [best practices]()
-  - [example]()
+  - [shadow dom](./wc-shadow-dom.md)
+  - [best practices](./wc-best-practices.md)
+  - [example](./wc-examples.md)
