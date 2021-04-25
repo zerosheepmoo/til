@@ -15,6 +15,12 @@
 
 [포스팅 목록](./../_posts/README.md) 참고
 
+## 번역 및 정리
+
+- [구글 웹 기초](../google-webfun/README.md)
+- [ECMAScript 2022](../ecmascript/README.md)
+- [Frameworks](../fw/README.md)
+
 ## 참고
 
 - [markdownlint](https://github.com/DavidAnson/markdownlint) 를 사용
