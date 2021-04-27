@@ -462,7 +462,7 @@ customElements.define('x-foo-shadowdom', class extends HTMLElement {
 </x-foo-shadowdom>
 ```
 
-### `<template>`으로 엘리먼트 만들기
+### `template`으로 엘리먼트 만들기
 
 [`<template>`](https://html.spec.whatwg.org/multipage/scripting.html#the-template-element)
 엘리먼트는 parse 되고, 페이지로드시 inert 되며, runtime에 활상화되는 DOM fragments 를 선언할 수 있게 해준다.
