@@ -20,6 +20,7 @@
 - [구글 웹 기초](../google-webfun/README.md)
 - [ECMAScript 2022](../ecmascript/README.md)
 - [Frameworks](../fw/README.md)
+- [소프트웨어 개발 철학](./../sw/README.md)
 
 ## 참고
 
