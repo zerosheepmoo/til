@@ -13,3 +13,4 @@
 - [2021년 4월 22일 createtriggerevent](2021-04-22-createtriggerevent.md)
 - [2021년 4월 23일 devtoolsdetect](2021-04-23-devtoolsdetect.md)
 - [2021년 4월 24일 tsprivateclassfield2](2021-04-24-tsprivateclassfield2.md)
+- [2021년 4월 27일 tdddddbdd](2021-04-27-tdddddbdd.md)
