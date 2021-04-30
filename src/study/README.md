@@ -17,10 +17,12 @@
 
 ## 번역 및 정리
 
+- ~~[4월 til log](./april-log/README.md)~~
 - [구글 웹 기초](../google-webfun/README.md)
 - [ECMAScript 2022](../ecmascript/README.md)
 - [Frameworks](../fw/README.md)
 - [소프트웨어 개발 철학](./../sw/README.md)
+- [프로그래밍 언어](../program-langs/README.md)
 
 ## 참고
 

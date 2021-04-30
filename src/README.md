@@ -8,8 +8,8 @@ actions:
   - text: 둘러보기
     link: /study/
     type: primary
-  - text: 프레임워크
-    link: /fw/
+  - text: 리뷰
+    link: /review/
     type: secondary
 features:
   - title: Steady
