@@ -36,15 +36,15 @@ export default defineUserConfig<DefaultThemeOptions>({
                         link: '/study/'
                     },
                     {
-                        text: 'Framework',
+                        text: 'ProgramLangs',
                         children: [
                             {
-                                text: 'Vuepress',
-                                link: '/fw/vuepress/',
+                                text: 'Javascript',
+                                link: '/program-langs/javascript/',
                             },
                             {
-                                text: 'Others',
-                                link: '/fw/others/',
+                                text: 'Typescript',
+                                link: '/program-langs/typescript/',
                             },
                         ]
                     }
@@ -98,6 +98,7 @@ export default defineUserConfig<DefaultThemeOptions>({
     extendsMarkdown: (md) => {
         let footnote = require('markdown-it-footnote');
         let multitable = require('markdown-it-multimd-table');
+
         md.use(footnote);
         md.use(multitable, { multiline: true, rowspan: true });
     },
