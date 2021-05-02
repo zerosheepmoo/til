@@ -1,3 +1,9 @@
+---
+sidebar: 'auto'
+prev: './README.md'
+next: './deno-permission.md'
+---
+
 # deno 기초
 
 ## 왜 만들었을까?

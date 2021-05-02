@@ -1,6 +1,6 @@
 ---
 sidebar: 'auto'
-next: './deno-basic'
+next: './deno-basic.md'
 ---
 
 # Deno
