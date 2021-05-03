@@ -1,7 +1,7 @@
 ---
 sidebar: 'auto'
 prev: './deno-basic.md'
-# next: '.md'
+next: 'introduction.md'
 ---
 
 # Permissions
