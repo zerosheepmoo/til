@@ -1,7 +1,7 @@
 ---
 sidebar: 'auto'
 prev: './deno-permission.md'
-# next: '.md'
+next: 'getting-start.md'
 ---
 
 # Introduction
