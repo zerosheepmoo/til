@@ -164,6 +164,222 @@ deno completions powershell >> $profile
   - it will be run whenever you launch the PowerShell.
 :::
 
+### Editors and IDEs
+
+- 현재시점에선 에디터에서 사용이 불완전해서 커뮤니티에서 각자만의 방법을 고안했음
+
+#### VS Code
+
+- [vscode_deno](https://github.com/denoland/vscode_deno)
+- [visual studio marketplace](https://marketplace.visualstudio.com/items?itemName=denoland.vscode-deno)
+
+:::details 더보기
+
+#### JetBrains IDEs
+
+- [Deno plugin](https://plugins.jetbrains.com/plugin/14382-deno)
+- Once installed, replace the content
+  - of `External Libraries > Deno Library > lib > lib.deno.d.ts`
+  - with the output of `deno types`.
+- 매번 deno 가 업데이트할때마다 설치해야한다.
+
+#### Vim and NeoVim
+
+- [CoC](https://github.com/neoclide/coc.nvim)
+  (intellisense engine and language server protocol)
+- [ALE](https://github.com/dense-analysis/ale)
+  (syntax checker and language server protocol client)
+
+##### CoC
+
+- `:CocInstall coc-tsserver`
+- `:CocInstall coc-deno`
+- `:CocCommand deno.initializeWorkspace`
+- `gd` (go to definition), `gr` (goto/find references) 가 작동
+
+##### ALE
+
+- 특별한 추가 configuration 이 없다.
+- `$PATH` 에 executable 이 위치하 않거나, `deno`라는 이름이 아니거나, unstable features/APIs 사용할 때
+  - Override ALE's default values.
+  - [`:help ale-typescript`](https://github.com/dense-analysis/ale/blob/master/doc/ale-typescript.txt)
+
+- 지원
+  - autocompletion
+  - refactoring
+  - going to definition,
+- key bindings 은 메뉴얼하게 설정
+- 설정을 위해 Copy the snippet below into your `vimrc/init.vim`
+- `deno fmt`: 포매팅
+  - ale_linter setting needs to be set either on a per buffer basis
+    - `(let b:ale_linter = ['deno'])`
+  - or globally for all TypeScript files
+    - `(let g:ale_fixers={'typescript': ['deno']}`)
+
+<!-- markdownlint-disable -->
+```typescript
+" Use ALE autocompletion with Vim's 'omnifunc' setting (press <C-x><C-o> in insert mode)
+autocmd FileType typescript set omnifunc=ale#completion#OmniFunc
+
+" Make sure to use map instead of noremap when using a <Plug>(...) expression as the {rhs}
+nmap gr <Plug>(ale_rename)
+nmap gR <Plug>(ale_find_reference)
+nmap gd <Plug>(ale_go_to_definition)
+nmap gD <Plug>(ale_go_to_type_definition)
+
+let g:ale_fixers = {'typescript': ['deno']}
+let g:ale_fix_on_save = 1 " run deno fmt when saving a buffer
+```
+<!-- markdownlint-enable -->
+
+#### Emacs
+
+- [typescript-deno-plugin](https://github.com/justjavac/typescript-deno-plugin)
+- [official VSCode extension](https://github.com/denoland/vscode_deno)
+
+`tide` is setup for your instance of Emacs
+
+- `npm install --save-dev typescript-deno-plugin`
+- (`npm init -y` as necessary)
+- `tsconfig.json` and you are off to the races!
+
+```json
+{
+  "compilerOptions": {
+    "plugins": [
+      {
+        "name": "typescript-deno-plugin",
+        "enable": true, // default is `true`
+        "importmap": "import_map.json"
+      }
+    ]
+  }
+}
+```
+
+#### Atom
+
+- [atom-ide-base](https://atom.io/packages/atom-ide-base)
+- [atom-ide-deno](https://atom.io/packages/atom-ide-deno)
+
+#### LSP clients
+
+- [Language server protocol](https://langserver.org/)
+  - version 1.6.0 or later.
+  - If your editor supports the LSP
+    - can use Deno as a language server for TypeScript and JavaScript.
+
+The editor can start the server with `deno lsp`.
+
+##### Example for Kakoune
+
+- [`kak-lsp`](https://github.com/kak-lsp/kak-lsp)
+- `kak-lsp.toml`
+
+```toml
+[language.deno]
+filetypes = ["typescript", "javascript"]
+roots = [".git"]
+command = "deno"
+args = ["lsp"]
+
+[language.deno.initialization_options]
+enable = true
+lint = true
+```
+
+##### Example for Vim/Neovim
+
+- install [`vim-lsp`](https://github.com/prabirshrestha/vim-lsp)
+- add `vimrc/init.vim`
+
+<!-- markdownlint-disable -->
+```vim
+if executable("deno")
+  augroup LspTypeScript
+    autocmd!
+    autocmd User lsp_setup call lsp#register_server({
+    \ "name": "deno lsp",
+    \ "cmd": {server_info -> ["deno", "lsp"]},
+    \ "root_uri": {server_info->lsp#utils#path_to_uri(lsp#utils#find_nearest_parent_file_directory(lsp#utils#get_buffer_path(), "tsconfig.json"))},
+    \ "allowlist": ["typescript", "typescript.tsx"],
+    \ "initialization_options": {
+    \     "enable": v:true,
+    \     "lint": v:true,
+    \     "unstable": v:true,
+    \   },
+    \ })
+  augroup END
+endif
+```
+<!-- markdownlint-enable -->
+
+##### Example for Sublime Text
+
+- Install the [Sublime LSP package](https://packagecontrol.io/packages/LSP)
+- Install the [TypeScript package](https://packagecontrol.io/packages/TypeScript)
+  to get syntax highlighting
+- Add the following `.sublime-project` file to your project folder
+
+```json
+{
+  "settings": {
+    "LSP": {
+      "deno": {
+        "command": [
+          "deno",
+          "lsp"
+        ],
+        "initializationOptions": {
+          // "config": "", // Sets the path for the config file in your project
+          "enable": true,
+          // "importMap": "", // Sets the path for the import-map in your project
+          "lint": true,
+          "unstable": false
+        },
+        "enabled": true,
+        "languages": [
+          {
+            "languageId": "javascript",
+            "scopes": ["source.js"],
+            "syntaxes": [
+              "Packages/Babel/JavaScript (Babel).sublime-syntax",
+              "Packages/JavaScript/JavaScript.sublime-syntax"
+            ]
+          },
+          {
+            "languageId": "javascriptreact",
+            "scopes": ["source.jsx"],
+            "syntaxes": [
+              "Packages/Babel/JavaScript (Babel).sublime-syntax",
+              "Packages/JavaScript/JavaScript.sublime-syntax"
+            ]
+          },
+          {
+            "languageId": "typescript",
+            "scopes": ["source.ts"],
+            "syntaxes": [
+              "Packages/TypeScript-TmLanguage/TypeScript.tmLanguage",
+              "Packages/TypeScript Syntax/TypeScript.tmLanguage"
+            ]
+          },
+          {
+            "languageId": "typescriptreact",
+            "scopes": ["source.tsx"],
+            "syntaxes": [
+              "Packages/TypeScript-TmLanguage/TypeScriptReact.tmLanguage",
+              "Packages/TypeScript Syntax/TypeScriptReact.tmLanguage"
+            ]
+          }
+        ]
+      }
+    }
+  }
+}
+```
+
+:::
+
 ## First steps
 
 ## Command line interface
