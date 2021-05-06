@@ -382,6 +382,89 @@ endif
 
 ## First steps
 
+- `async/await` 먼저
+
+### Hello World
+
+```ts
+console.log("Welcome to Deno!");
+```
+
+```bash
+deno run <https://deno.land/std@0.95.0/examples/welcome.ts>
+```
+
+### Making an HTTP request
+
+- [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+  
+```ts
+const url = Deno.args[0]; // application 의 first argument 에 pass, url 상수에 저장
+const res = await fetch(url); //  요청
+
+// response body를 ArrayBuffer로 parse, response 기다림, 그 후 body 에 저장
+const body = new Uint8Array(await res.arrayBuffer()); 
+
+await Deno.stdout.write(body); // stdout에 write
+```
+
+```bash
+# 잘못된 예시
+deno run <https://deno.land/std@0.95.0/examples/curl.ts> <https://example.com>
+```
+
+```bash
+# permission flag 와 함께
+deno run --allow-net=example.com <https://deno.land/std@0.95.0/examples/curl.ts> <https://example.com>
+```
+
+### Reading a file
+
+```ts
+const filenames = Deno.args;
+for (const filename of filenames) {
+  const file = await Deno.open(filename);
+  await Deno.copy(file, Deno.stdout);
+  file.close();
+}
+```
+
+- `copy()`: kernel→userspace→kernel copies.
+
+```bash
+deno run --allow-read <https://deno.land/std@0.95.0/examples/cat.ts> /etc/passwd
+```
+
+### TCP server
+
+```ts
+const hostname = "0.0.0.0";
+const port = 8080;
+const listener = Deno.listen({ hostname, port });
+console.log(`Listening on ${hostname}:${port}`);
+for await (const conn of listener) {
+  Deno.copy(conn, conn);
+}
+```
+
+```bash
+deno run --allow-net <https://deno.land/std@0.95.0/examples/echo_server.ts>
+```
+
+- test: sending data to it with netcat:
+
+```bash
+$ nc localhost 8080
+hello world
+hello world
+```
+
+- `cat.ts` 예시같이, `copy()` 도 불필요한 memory copy 를 만들지 않는다.
+- 패킷을 커널로부터 받고 다시 보내는 원리다.
+### More examples
+
+[Examples](./examples.md)
+
 ## Command line interface
 
 ## Permissions
