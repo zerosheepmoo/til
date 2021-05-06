@@ -8,6 +8,9 @@ next: './deno-basic.md'
 ## 목록
 
 - [deno 시작](./deno-basic.md)
+- [deno permission](./deno-permission.md)
+- [introduction](./introduction.md)
+- [getting start](./getting-start.md)
 
 ## 관련 포스팅
 
