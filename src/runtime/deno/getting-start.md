@@ -94,7 +94,7 @@ deno upgrade --version 1.0.1
 
 ## 환경설정
 
-### Environmental variables
+### 환경변수
 
 - `DENO_DIR` defaults to `$HOME/.cache/deno`
   - 메뉴얼하게 지정도 가능
@@ -102,7 +102,7 @@ deno upgrade --version 1.0.1
   - <https://no-color.org/>
   - `--allow-env` 없이 `NO_COLOR`를 테스트 가능: `Deno.noColor`
 
-### Shell autocomplete
+### 쉘 자동완성
 
 - `deno completions <shell>` command를 사용하여 completion script를 생성가능.
   - `stdout`으로 나오니까 적절한 파일에 redirection 해야함.
@@ -164,7 +164,7 @@ deno completions powershell >> $profile
   - it will be run whenever you launch the PowerShell.
 :::
 
-### Editors and IDEs
+### 에디터와 IDE
 
 - 현재시점에선 에디터에서 사용이 불완전해서 커뮤니티에서 각자만의 방법을 고안했음
 
@@ -380,7 +380,7 @@ endif
 
 :::
 
-## First steps
+## 첫 걸음마
 
 - `async/await` 먼저
 
@@ -394,7 +394,7 @@ console.log("Welcome to Deno!");
 deno run <https://deno.land/std@0.95.0/examples/welcome.ts>
 ```
 
-### Making an HTTP request
+### HTTP 요청 만들기
 
 - [fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
   
@@ -408,17 +408,19 @@ const body = new Uint8Array(await res.arrayBuffer());
 await Deno.stdout.write(body); // stdout에 write
 ```
 
+<!-- markdownlint-disable -->
 ```bash
 # 잘못된 예시
-deno run <https://deno.land/std@0.95.0/examples/curl.ts> <https://example.com>
+deno run https://deno.land/std@0.95.0/examples/curl.ts https://example.com
 ```
 
 ```bash
 # permission flag 와 함께
-deno run --allow-net=example.com <https://deno.land/std@0.95.0/examples/curl.ts> <https://example.com>
+deno run --allow-net=example.com https://deno.land/std@0.95.0/examples/curl.ts https://example.com
 ```
+<!-- markdownlint-enable -->
 
-### Reading a file
+### 파일 읽기
 
 ```ts
 const filenames = Deno.args;
@@ -435,7 +437,7 @@ for (const filename of filenames) {
 deno run --allow-read <https://deno.land/std@0.95.0/examples/cat.ts> /etc/passwd
 ```
 
-### TCP server
+### TCP 서버
 
 ```ts
 const hostname = "0.0.0.0";
@@ -461,14 +463,166 @@ hello world
 
 - `cat.ts` 예시같이, `copy()` 도 불필요한 memory copy 를 만들지 않는다.
 - 패킷을 커널로부터 받고 다시 보내는 원리다.
-### More examples
 
-[Examples](./examples.md)
+### 더 많은 예시
+
+> [Examples](./examples.md) 참고
 
 ## Command line interface
 
+- `help` 사용해서 알아보기
+
+:::details 예시
+
+```bash
+# Using the subcommand.
+deno help
+
+# Using the short flag -- outputs the same as above.
+deno -h
+
+# Using the long flag -- outputs more detailed help text where available.
+deno --help
+```
+
+```bash
+deno help bundle
+deno bundle -h
+deno bundle --help
+```
+
+:::
+
+### 스크립트 소스
+
+- stdin: `-`
+- url, file 명은 그대로
+
+```bash
+deno run main.ts
+deno run https://mydomain.com/main.ts
+cat main.ts | deno run -
+```
+
+### 스크립트 아규먼트
+
+- flag 외 사용자 지정 argument 설정 가능
+  
+:::details 예시
+
+```bash
+deno run main.ts a b -c --quiet
+// main.ts
+console.log(Deno.args); // [ "a", "b", "-c", "--quiet" ]
+```
+
+```bash
+# Good. We grant net permission to net_client.ts / runtime-flag
+
+deno run --allow-net net_client.ts
+
+# Bad! --allow-net was passed to Deno.args, throws a net permission error / script-flag
+
+deno run net_client.ts --allow-net
+```
+
+:::
+
+- a non-positional flag is parsed differently depending on its position.
+
+:::details 이유
+
+1. runtime flag 와 script flag 를 구분하는 가장 논리적인 방법임
+2. 가장 ergonomic 한 방법임[^1]
+3. 다른 유명한 런타임 (node.js ㅋㅋ) 에서도 마찬가지 방법이기 때문
+
+- Try `node -c index.js` and `node index.js -c`.
+- The first will only do a syntax check on `index.js` as per Node's `-c` flag.
+- The second will execute index.js with `-c` passed to `require("process").argv`.
+
+:::
+
+### Watch 모드
+
+:::bash
+deno run --watch --unstable main.ts
+:::
+
+### Integrity 플래그
+
+- [integrity checking](./integrity-checking.md#integrity-checking-amp-lock-files)
+- `deno cache`, `deno run`, `deno test` 에 영향을 미침
+
+```bash
+--lock <FILE>    # Check the specified lock file
+--lock-write     # Write lock file. Use with --lock.
+```
+
+### 캐시와 compilation 플래그
+
+- `deno cache`, `deno run`, `deno test` 에 영향을 미침
+- module resolution, compilation configuration etc...에도
+
+```bash
+--config <FILE>               # Load tsconfig.json configuration file
+--import-map <FILE>           # UNSTABLE: Load import map file
+--no-remote                   # Do not resolve remote modules
+--reload=<CACHE_BLOCKLIST>    # Reload source code cache (recompile TypeScript)
+--unstable                    # Enable unstable APIs
+```
+
+### 런타임 플래그
+
+- `deno run`, `deno test` 에 영향을 미침
+
+#### Permission 플래그
+
+> [permissions](#permissions) 참조
+
+#### 다른 런타임 플래그
+
+```bash
+--cached-only                # Require that remote dependencies are already cached
+--inspect=<HOST:PORT>        # activate inspector on host:port ...
+--inspect-brk=<HOST:PORT>    # activate inspector on host:port and break at ...
+--seed <NUMBER>              # Seed Math.random()
+--v8-flags=<v8-flags>        # Set V8 command line options. For help: ...
+```
+
 ## Permissions
 
-## Using WebAssembly
+> [deno permission](./deno-permission.md) 참조
+
+## 웹어셈블리 사용하기
+
+- [WebAssembly mdn](https://developer.mozilla.org/en-US/docs/WebAssembly)
+- [WebAssembly official](https://webassembly.org/)
+
+```ts
+const wasmCode = new Uint8Array([
+  0, 97, 115, 109, 1, 0, 0, 0, 1, 133, 128, 128, 128, 0, 1, 96, 0, 1, 127,
+  3, 130, 128, 128, 128, 0, 1, 0, 4, 132, 128, 128, 128, 0, 1, 112, 0, 0,
+  5, 131, 128, 128, 128, 0, 1, 0, 1, 6, 129, 128, 128, 128, 0, 0, 7, 145,
+  128, 128, 128, 0, 2, 6, 109, 101, 109, 111, 114, 121, 2, 0, 4, 109, 97,
+  105, 110, 0, 0, 10, 138, 128, 128, 128, 0, 1, 132, 128, 128, 128, 0, 0,
+  65, 42, 11
+]);
+const wasmModule = new WebAssembly.Module(wasmCode);
+const wasmInstance = new WebAssembly.Instance(wasmModule);
+const main = wasmInstance.exports.main as CallableFunction
+console.log(main().toString());
+```
+
+- 파일에선
+
+```ts
+const wasmCode = await Deno.readFile("main.wasm");
+const wasmModule = new WebAssembly.Module(wasmCode);
+const wasmInstance = new WebAssembly.Instance(wasmModule);
+const main = wasmInstance.exports.main as CallableFunction;
+console.log(main().toString());
+```
 
 ## Debugging your code
+
+[^1]: relating to or designed for efficiency and comfort in the working environment
