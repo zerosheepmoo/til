@@ -1,7 +1,7 @@
 ---
 sidebar: 'auto'
 prev: './introduction.md'
-# next: '.md'
+next: './the-runtime.md'
 ---
 
 # 시작하기
@@ -544,9 +544,9 @@ deno run net_client.ts --allow-net
 
 ### Watch 모드
 
-:::bash
+```bash
 deno run --watch --unstable main.ts
-:::
+```
 
 ### Integrity 플래그
 
@@ -623,6 +623,106 @@ const main = wasmInstance.exports.main as CallableFunction;
 console.log(main().toString());
 ```
 
-## Debugging your code
+## 디버깅
+
+- [V8 Inspector Protocol](https://v8.dev/docs/inspector)
+  - 크롬 개발자도구나, vscode 같이 해당 프로토콜을 지원하는 클라이언트에서 디버깅 가능하단 이야기
+- `--inspect`: breaktime
+- `--inspect-brk`: 첫줄부터
+
+### 크롬 개발자 도구
+
+- [`file_server.ts`](https://deno.land/std@0.95.0/http/file_server.ts)
+
+```bash
+$ deno run --inspect-brk --allow-read --allow-net https://deno.land/std@0.95.0/http/file_server.ts
+Debugger listening on ws://127.0.0.1:9229/ws/1e82c406-85a9-44ab-86b6-7341583480b1
+Download https://deno.land/std@0.95.0/http/file_server.ts
+Compile https://deno.land/std@0.95.0/http/file_server.ts
+...
+```
+
+- `chrome://inspect` - inspect
+
+![chrome://inspect](https://deno.land/x/deno@v1.9.2/docs/images/debugger1.jpg)
+
+![Devtools opened](https://deno.land/x/deno@v1.9.2/docs/images/debugger2.jpg)
+
+- `file_server.ts` 대신 `_constants.ts` 에서 시작하는데, 후자가 전자의 left-most,
+  bottom-most dependency 이기 때문이다.
+- 그러니 `file_server.ts`를 열고 break point 를 찍자.
+
+![Open file_server.ts](https://deno.land/x/deno@v1.9.2/docs/images/debugger3.jpg)
+
+- 보통글씨: 컴파일 된 파일(`js`)
+- 이탤릭: 소스맵
+
+`listenAndServe` 메소드에 breakpoint
+
+![Break in file_server.ts](https://deno.land/x/deno@v1.9.2/docs/images/debugger4.jpg)
+
+- 다시 실행하고, request 보내고 inspect
+
+```bash
+curl http://0.0.0.0:4507/
+```
+
+![Break in request handling](https://deno.land/x/deno@v1.9.2/docs/images/debugger5.jpg)
+
+### VSCode
+
+> [작업 이슈](https://github.com/denoland/vscode_deno/issues/12)
+
+- `launch.json` config
+
+```json
+{
+  "version": "0.2.0",
+  "configurations": [
+    {
+      "name": "Deno",
+      "type": "pwa-node",
+      "request": "launch",
+      "cwd": "${workspaceFolder}",
+      "runtimeExecutable": "deno",
+      "runtimeArgs": ["run", "--inspect-brk", "-A", "${file}"],
+      "attachSimplePort": 9229
+    }
+  ]
+}
+```
+
+:::warning NOTE
+This uses the file you have open as the entry point;
+replace `${file}` with a script name if you want a fixed entry point.
+:::
+
+```ts
+// server.ts
+import { serve } from "https://deno.land/std@0.95.0/http/server.ts";
+const server = serve({ port: 8000 });
+console.log("http://localhost:8000/");
+
+for await (const req of server) {
+  req.respond({ body: "Hello World\n" });
+}
+```
+
+![VSCode debugger](https://deno.land/x/deno@v1.9.2/docs/images/debugger7.jpg)
+
+### JetBrains IDEs debug
+
+- 마우스 오른쪽 클릭 - `'Deno: <file name>'` option.
+- edit the run/debug configuration
+- modify the `Arguments` field with the required flags (permission).
+
+### Other
+
+- devtools protocol 이 구현되어있다면야...
+
+### 한계
+
+- autocomplete in Devtools' console causes the Deno process to exit.
+- profiling and memory dumps might not work correctly.
 
 [^1]: relating to or designed for efficiency and comfort in the working environment
