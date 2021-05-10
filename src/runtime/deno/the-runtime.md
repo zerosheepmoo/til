@@ -437,12 +437,14 @@ console.log(location.href);
 // "https://example.com/path"
 ```
 
+<!-- markdownlint-disable -->
 ```ts
 // deno run main.ts
 
 console.log(location.href);
 // error: Uncaught ReferenceError: Access to "location", run again with --location <href>.
 ```
+<!-- markdownlint-enable -->
 
 ```ts
 // deno run --location https://example.com/path main.ts
@@ -504,6 +506,7 @@ console.log("hello world");
 self.close();
 ```
 
+<!-- markdownlint-disable -->
 ```bash
 $ deno run main.ts
 error: Uncaught PermissionDenied: read access to "./worker.ts", run again with the --allow-read flag
@@ -533,6 +536,7 @@ $ deno run --allow-net main.ts
 hello world
 ```
 
+<!-- markdownlint-enable -->
 ### Using Deno in worker
 
 :::warning 주의!
