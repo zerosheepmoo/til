@@ -54,7 +54,48 @@ deno run --no-check something.ts
 
 - 코어 디자인 principle 이 "magical" resolution 을 피하는데 있다.
 
-## Configuration
+## 타입스크립트 Configuration
+
+- Deno Default 사용 권장. 배포 시 사용자지정 config 파일도 필요하기 때문.
+
+```bash
+> deno run --config ./tsconfig.json main.ts
+```
+
+### 사용 가능 옵션 표
+
+- `compilerOptions` 의 일부
+
+> [원문 how deno uses a configuration file 참조](https://deno.land/manual/typescript/configuration#how-deno-uses-a-configuration-file)
+
+### 예시 `tsconfig.json`
+
+```json
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "esModuleInterop": true,
+    "experimentalDecorators": true,
+    "inlineSourceMap": true,
+    "isolatedModules": true,
+    "jsx": "react",
+    "lib": ["deno.window"],
+    "module": "esnext",
+    "strict": true,
+    "target": "esnext",
+    "useDefineForClassFields": true
+  }
+}
+```
+
+- `deno types` on the command line
+  - and piping the output to a file
+  - and including that in the files as part of the program
+  - removing the `"lib"` option
+  - and setting the `"noLib"` option to true.
+- `--unstable` flag
+- `"lib"` option to `[ "deno.window", "deno.unstable" ]`
+- load a worker: `"deno.worker"` instead of `"deno.window"`
 
 ## Types and type declarations
 
