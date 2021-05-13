@@ -97,7 +97,81 @@ deno run --no-check something.ts
 - `"lib"` option to `[ "deno.window", "deno.unstable" ]`
 - load a worker: `"deno.worker"` instead of `"deno.window"`
 
-## Types and type declarations
+## 타입과 타입 선언
+
+- no magical resolution
+- importer가 아닌 supplier가 모듈의 타입을 명시
+
+### 가져오기 시 타입 제공
+
+- `// @deno-type="path/of/type/declaration"`
+
+```js
+// @deno-types="./coolLib.d.ts"
+import * as coolLib from "./coolLib.js";
+```
+
+### 호스팅 시 타입 제공
+
+#### Triple slash
+
+- `/// <reference path="./coolLib.d.ts" />`
+
+```js
+/// <reference path="./coolLib.d.ts" />
+
+// ... the rest of the JavaScript ...
+```
+
+#### X-TypeScript-Types header
+
+- `https://example.com/coolLib.js`
+- `https://example.com/coolLib.d.ts`
+
+```response
+HTTP/1.1 200 OK
+Content-Type: application/javascript; charset=UTF-8
+Content-Length: 648
+X-TypeScript-Types: ./coolLib.d.ts
+```
+
+### 중요한 점
+
+#### 타입 선언 semantics
+
+- `d.ts`: UMD declarations and not ambient/global declarations
+  - 아니면 Deno랑 호환 안될수도
+
+#### Deno 친화적 CDN
+
+- [skypack](https://docs.skypack.dev/skypack-cdn/code/deno)
+
+```ts
+// X-TypeScript-Types 헤더, ?dts 쿼리로 원격임을 명시
+import React from "https://cdn.skypack.dev/react?dts";
+```
+
+### 타입 체킹 시 JS Behavior
+
+- 타입스크립트 컴파일러에서 어짜피 정적 분석을 하긴함. `"checkJs": false`여도.
+- 하지만, 다음의 경우 문제가 될 수 있으니까 JS 경우 위의 형식으로 타입제공을 해주자
+  - special packaging, global UMD module, TypeScript's analysis of the module
+
+#### 내부에서는
+
+- 컴파일 / 실행하기 까지의 순서
+  - 루트 모듈을 파싱하여 그래프 생성
+  - 그리고 의존성을 감지
+  - 디펜던시 모듈들을 다시 파싱 / 의존성 감지
+  - 이 과정을 모든 의존성들이 retrieve 될 때 까지 recursively do
+  - 컴파일 / 실행
+- 각 의존성 마다 두 개의 잠재적 `slot`이 사용
+  - code slot: 예) `.js`
+  - type slot: 예) `.d.ts`
+- 그래프 빌드 이후에 타입 체크가 필요할 경우
+  - TS compiler 시작, 잠재적으로 JS로 emit 될 필요가 있는 모듈에 feeds it
+  - TS 컴파일러가 추가적인 모듈을 요청하고, Deno가 의존성 때문에 슬롯을 살펴보고, 코드슬롯 채워지기전에 타입슬롯을 제공
+- 이는 모듈 resolving 대신에 타입스크립트로 `.d.ts` 제공, 아님 위의 방법대로 제공하는 것을 말함!
 
 ## Migrating to/from JavaScript
 
