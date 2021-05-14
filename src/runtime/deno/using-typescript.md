@@ -173,7 +173,47 @@ import React from "https://cdn.skypack.dev/react?dts";
   - TS 컴파일러가 추가적인 모듈을 요청하고, Deno가 의존성 때문에 슬롯을 살펴보고, 코드슬롯 채워지기전에 타입슬롯을 제공
 - 이는 모듈 resolving 대신에 타입스크립트로 `.d.ts` 제공, 아님 위의 방법대로 제공하는 것을 말함!
 
-## Migrating to/from JavaScript
+## 자바스크립트 에서/로 마이그레이션
+
+### 자바스크립트 타입 체킹
+
+- TypeScript type checker instead of everywhere type annotation
+
+```js
+// @ts-check
+```
+
+- Config file: `--config` option
+
+```json
+{
+  "compilerOptions": {
+    "checkJs": true
+  }
+}
+```
+
+### JSDoc
+
+- [typescirpt jsdoc](https://www.typescriptlang.org/docs/handbook/jsdoc-supported-types.html)
+
+```js
+/** @type {string[]} */
+const a = [];
+```
+
+### 타입 체크 스킵하기
+
+- `--no-check` option
+- or pragma
+
+```js
+// @ts-nocheck
+```
+
+### js 파일을 ts 파일로 이름 재정의
+
+- deno가 `strict` 모드라서 몇 몇은 안될 수도 있다.
 
 ## Runtime compiler APIs
 
