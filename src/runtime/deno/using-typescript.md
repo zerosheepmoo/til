@@ -1,3 +1,9 @@
+---
+sidebar: 'auto'
+prev: './external.md'
+# next: './.md'
+---
+
 # Typescript 사용하기
 
 ## Overview
@@ -215,6 +221,154 @@ const a = [];
 
 - deno가 `strict` 모드라서 몇 몇은 안될 수도 있다.
 
-## Runtime compiler APIs
+## 런타임 컴파일러 APIs
+
+> `--unstable` 해야 쓸 수 있음
+
+### Deno.emit()
+
+:::details 자세히
+
+- 정의
+
+```ts
+function emit(
+  rootSpecifier: string | URL,
+  options?: EmitOptions,
+): Promise<EmitResult>;
+```
+
+- 옵션
+
+```ts
+interface EmitOptions {
+  /** Indicate that the source code should be emitted to a single file
+    * JavaScript bundle that is a single ES module (`"esm"`) or a single file
+    * self contained script we executes in an immediately invoked function
+    * when loaded (`"iife"`). */
+  bundle?: "esm" | "iife";
+  /** If `true` then the sources will be typed checked, returning any
+    * diagnostic errors in the result.  If `false` type checking will be
+    * skipped.  Defaults to `true`.
+    *
+    * *Note* by default, only TypeScript will be type checked, just like on
+    * the command line.  Use the `compilerOptions` options of `checkJs` to
+    * enable type checking of JavaScript. */
+  check?: boolean;
+  /** A set of options that are aligned to TypeScript compiler options that
+    * are supported by Deno. */
+  compilerOptions?: CompilerOptions;
+  /** An [import-map](https://deno.land/manual/linking_to_external_code/import_maps#import-maps)
+    * which will be applied to the imports. */
+  importMap?: ImportMap;
+  /** An absolute path to an [import-map](https://deno.land/manual/linking_to_external_code/import_maps#import-maps).
+    * Required to be specified if an `importMap` is specified to be able to
+    * determine resolution of relative paths. If a `importMap` is not
+    * specified, then it will assumed the file path points to an import map on
+    * disk and will be attempted to be loaded based on current runtime
+    * permissions.
+    */
+  importMapPath?: string;
+  /** A record of sources to use when doing the emit.  If provided, Deno will
+    * use these sources instead of trying to resolve the modules externally. */
+  sources?: Record<string, string>;
+}
+```
+
+- 결과
+
+```ts
+interface EmitResult {
+  /** Diagnostic messages returned from the type checker (`tsc`). */
+  diagnostics: Diagnostic[];
+  /** Any emitted files.  If bundled, then the JavaScript will have the
+   * key of `deno:///bundle.js` with an optional map (based on
+   * `compilerOptions`) in `deno:///bundle.js.map`. */
+  files: Record<string, string>;
+  /** An optional array of any compiler options that were ignored by Deno. */
+  ignoredOptions?: string[];
+  /** An array of internal statistics related to the emit, for diagnostic
+   * purposes. */
+  stats: Array<[string, number]>;
+}
+```
+
+### 외부 소스 사용하기
+
+```ts
+try {
+  const { files } = await Deno.emit("mod.ts");
+  for (const [fileName, text] of Object.entries(files)) {
+    console.log(`emitted ${fileName} with a length of ${text.length}`);
+  }
+} catch (e) {
+  // something went wrong, inspect `e` to determine
+}
+```
+
+### 옵션들 사용하기
+
+- `source`
+
+```ts
+const { files } = await Deno.emit("/mod.ts", {
+  sources: {
+    "/mod.ts": `import * as a from "./a.ts";\nconsole.log(a);\n`,
+    "/a.ts": `export const a: Record<string, string> = {};\n`,
+  },
+});
+```
+
+- 타입체킹 (JS)
+
+```ts
+const { files, diagnostics } = await Deno.emit("./mod.js", {
+  compilerOptions: {
+    checkJs: true,
+  },
+});
+```
+
+```ts
+const { files, diagnostics } = await Deno.emit("./mod.ts");
+if (diagnostics.length) {
+  // there is something that impacted the emit
+  console.warn(Deno.formatDiagnostics(diagnostics));
+}
+```
+
+- 타입체킹 스킵 (TS 까지)
+
+```ts
+const { files } = await Deno.emit("./mod.ts", {
+  check: false,
+});
+```
+
+- 번들링: 워커스크립트는 안가져옴
+
+```ts
+const { files, diagnostics } = await Deno.emit("./mod.ts", {
+  bundle: "esm",
+});
+```
+
+- `importMap`
+
+```ts
+const { files } = await Deno.emit("mod.ts", {
+  bundle: "esm",
+  importMap: {
+    imports: {
+      "lodash": "https://deno.land/x/lodash",
+    },
+  },
+  importMapPath: "file:///import-map.json",
+});
+```
+
+- [`CompilerOptions` 목록](https://doc.deno.land/builtin/unstable#Deno.CompilerOptions)
+
+:::
 
 ## FAQ
