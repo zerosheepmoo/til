@@ -329,7 +329,7 @@ const { files, diagnostics } = await Deno.emit("./mod.js", {
 });
 ```
 
-```ts
+```ts₩
 const { files, diagnostics } = await Deno.emit("./mod.ts");
 if (diagnostics.length) {
   // there is something that impacted the emit
@@ -372,3 +372,10 @@ const { files } = await Deno.emit("mod.ts", {
 :::
 
 ## FAQ
+
+:::danger 주의
+5월 11부터 1.10.1 이 릴리즈되었다.
+여기부턴 1.10.1 버전의 메뉴얼을 기준으로 한다.
+:::
+
+> [FAQ](https://deno.land/manual@v1.10.1/typescript/faqs)
