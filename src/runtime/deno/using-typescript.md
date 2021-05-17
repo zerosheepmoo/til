@@ -1,7 +1,7 @@
 ---
 sidebar: 'auto'
 prev: './external.md'
-# next: './.md'
+next: './standard-library.md'
 ---
 
 # Typescript 사용하기
