@@ -112,9 +112,9 @@ export default defineUserConfig<DefaultThemeOptions>({
                 }
             }
             if (filePath.endsWith('README.md')) {
-                
-                let year = filePath.substring(7,11);
-                let month = filePath.substring(11,13);
+
+                let year = filePath.substring(7, 11);
+                let month = filePath.substring(11, 13);
                 return {
                     frontmatter: {
                         permalinkPattern: `/${year}/${month}/`,
@@ -135,6 +135,16 @@ export default defineUserConfig<DefaultThemeOptions>({
             '@vuepress/plugin-google-analytics',
             {
                 id: 'G-8DQRPD9EMJ',
+            },
+        ],
+        [
+            '@vuepress/plugin-search',
+            {
+                locales: {
+                    '/': {
+                        placeholder: 'Search',
+                    },
+                },
             },
         ],
     ],
