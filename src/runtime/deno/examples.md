@@ -13,3 +13,6 @@
   - [외부와 연결하기](./external.md) 참고
 - `fetch data`
   - [Fetch API](https://developer.mozilla.org/en-US/docs/Web/API/Fetch_API)
+- `read and write files`
+  - [Deno.readTextFile](https://doc.deno.land/builtin/stable#Deno.readTextFile)
+    등 이용
