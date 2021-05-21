@@ -14,6 +14,8 @@ next: './deno-basic.md'
 - [런타임](./the-runtime.md)
 - [외부 라이브러리 사용](./external.md)
 - [타입스크립트 사용하기](./using-typescript.md)
+- [표준 라이브러리](./standard-library.md)
+- [예시들](./examples.md)
 
 ## 관련 포스팅
 

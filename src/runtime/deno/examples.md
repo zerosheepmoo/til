@@ -1,3 +1,7 @@
+---
+prev: './standard-library.md'
+---
+
 # 예제
 
 [예제 깃허브 레포지토리](https://github.com/zerosheepmoo/deno-prac)
@@ -18,7 +22,7 @@
     등 이용
 - `An implementation of the unix "cat" program`
   - Use the Deno runtime API to output the contents of a file to the console.
-  - `Deno.args` accesses the command line arguments.
-  - `Deno.open` is used to get a handle to a file.
-  - `Deno.copy` is used to transfer data from the file to the output stream.
+  - **Deno.args** accesses the command line arguments.
+  - **Deno.open** is used to get a handle to a file.
+  - **Deno.copy** is used to transfer data from the file to the output stream.
   - Files **should be closed** when you are finished with them
