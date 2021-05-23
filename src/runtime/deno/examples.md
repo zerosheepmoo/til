@@ -26,3 +26,6 @@ prev: './standard-library.md'
   - **Deno.open** is used to get a handle to a file.
   - **Deno.copy** is used to transfer data from the file to the output stream.
   - Files **should be closed** when you are finished with them
+- `Simple HTTP web server`
+  - `Deno.listen({ port: 8080 })`,`Deno.serveHttp(conn)`, `respondWith`: unstable
+  - `serve({ port: 8080 })`, `request.headers.get`: std/http library
