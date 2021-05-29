@@ -1,5 +1,6 @@
 ---
 prev: './standard-library.md'
+next: './testing.md'
 ---
 
 # 예제
