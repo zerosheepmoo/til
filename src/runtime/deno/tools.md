@@ -1,0 +1,67 @@
+# 빌트 인 툴
+
+- bundler (deno bundle)
+- compiling executables (deno compile)
+- installer (deno install)
+- dependency inspector (deno info)
+- documentation generator (deno doc)
+- formatter (deno fmt)
+- repl (deno repl)
+- test runner (deno test)
+- linter (deno lint)
+
+## install
+
+- `deno install [OPTIONS...] [URL] [SCRIPT_ARGS...]`
+- executable code 를 설치하고 배포하는 용도
+- `EXEC`
+
+```zsh
+$ deno install --allow-net --allow-read https://deno.land/std@0.97.0/http/file_server.ts
+[1/1] Compiling https://deno.land/std@0.97.0/http/file_server.ts
+
+✅ Successfully installed file_server.
+/Users/deno/.deno/bin/file_server
+```
+
+- 실행이름 바꾸기
+
+```zsh
+deno install --allow-net --allow-read -n serve https://deno.land/std@0.97.0/http/file_server.ts
+```
+
+- 설치 루트 바꾸기
+  - `--root` 옵션
+  - `DENO_INSTALL_ROOT`: 환경변수
+  - `$HOME/.deno`: default
+
+```bash
+deno install --root ~~~
+```
+
+- 메뉴얼리하게
+
+```zsh
+echo 'export PATH="$HOME/.deno/bin:$PATH"' >> ~/.bashrc
+```
+
+- [`import.meta.main`](https://deno.land/manual@v1.10.2/examples/module_metadata)
+
+```ts
+// https://example.com/awesome/cli.ts
+async function myAwesomeCli(): Promise<void> {
+  -- snip --
+}
+
+if (import.meta.main) {
+  myAwesomeCli();
+}
+```
+
+- example
+
+```bash
+# Install using deno install
+
+$ deno install -n awesome_cli https://example.com/awesome/cli.ts
+```
