@@ -65,3 +65,30 @@ if (import.meta.main) {
 
 $ deno install -n awesome_cli https://example.com/awesome/cli.ts
 ```
+
+## 코드 포매터
+
+- `deno fmt`
+  
+```zsh
+# format all JS/TS files in the current directory and subdirectories
+deno fmt
+# format specific files
+deno fmt myfile1.ts myfile2.ts
+# check if all the JS/TS files in the current directory and subdirectories are formatted
+deno fmt --check
+# format stdin and write to stdout
+cat file.ts | deno fmt -
+```
+
+- `// deno-fmt-ignore`: 한 줄
+- `// deno-fmt-ignore-file`: 파일 최상단
+
+```ts
+// deno-fmt-ignore
+export const identity = [
+    1, 0, 0,
+    0, 1, 0,
+    0, 0, 1,
+];
+```
