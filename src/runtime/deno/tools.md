@@ -92,3 +92,7 @@ export const identity = [
     0, 0, 1,
 ];
 ```
+
+## 레플(Read eval print loop)
+
+- [deno repl](https://deno.land/manual@v1.10.2/tools/repl)
