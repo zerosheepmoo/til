@@ -96,3 +96,18 @@ export const identity = [
 ## 레플(Read eval print loop)
 
 - [deno repl](https://deno.land/manual@v1.10.2/tools/repl)
+
+## 번들러
+
+- `deno bundle [URL]`
+- default 로 stdout
+- 결과는 es module
+
+```html
+<script type="module" src="website.bundle.js"></script>
+
+<!-- 또는 -->
+<script type="module">
+  import * as website from "website.bundle.js";
+</script>
+```
