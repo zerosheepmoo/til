@@ -111,3 +111,15 @@ export const identity = [
   import * as website from "website.bundle.js";
 </script>
 ```
+
+## 컴파일
+
+- exec 파일 만들기
+- `deno compile [--output <OUT>] <SRC>`
+
+<!-- markdownlint-disable -->
+```bash
+ --target <target>
+            Target OS architecture [possible values: x86_64-unknown-linux-gnu, x86_64-pc-windows-msvc, x86_64-apple-darwin, aarch64-apple-darwin]
+```
+<!-- markdownlint-enable -->
