@@ -16,6 +16,8 @@ next: './deno-basic.md'
 - [타입스크립트 사용하기](./using-typescript.md)
 - [표준 라이브러리](./standard-library.md)
 - [예시들](./examples.md)
+- [툴](./tools.md)
+- [기여하는법](./contributing.md)
 
 ## 관련 포스팅
 
