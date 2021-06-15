@@ -127,3 +127,7 @@ export const identity = [
 ## 문서
 
 - `deno doc [file name] --json`
+
+## 의존성 검사
+
+`deno info [url]`
