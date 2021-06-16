@@ -131,3 +131,18 @@ export const identity = [
 ## 의존성 검사
 
 `deno info [url]`
+
+## 린팅
+
+> [린팅 룰들](https://deno.land/manual@v1.11.0/tools/linter#available-rules)
+
+```zsh
+# lint all JS/TS files in the current directory and subdirectories
+deno lint
+# lint specific files
+deno lint myfile1.ts myfile2.ts
+# print result as JSON
+deno lint --json
+# read from stdin
+cat file.ts | deno lint -
+```
