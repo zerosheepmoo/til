@@ -1,33 +1,17 @@
-# 난 메모장이 필요하다
+# 안내
 
-기억력이 나빠 메모 툴을 이용해 메모하길 좋아하는 나.
+:::danger
+이 블로그는 더이상 진행되지 않습니다.
+개인 notion 으로 옮겼습니다.
+:::
 
-데스크톱 앱으로 하다보니 정리가 안돼있어 막상 필요할 때 찾지를 못한다.
+## 수십 일 간의 til 을 이전하며
 
-노션과 에버노트는 무겁고,
-
-어딘가 블로그 같은데 올려 예쁘게 보면서 꾸준히 공부까지 할 수 있는 메모장이 있으면 좋겠다고 생각했다.
-
-마침 이전부터 여기저기서 마주쳤던 TIL 블로그들이 기억났다.
-나도 해보자.
-
-## 포스팅
-
-[포스팅 목록](./../_posts/README.md) 참고
-
-## 번역 및 정리
-
-- ~~[4월 til log](./april-log/README.md)~~
-- [구글 웹 기초](../google-webfun/README.md)
-- [ECMAScript 2022](../ecmascript/README.md)
-- [Frameworks](../fw/README.md)
-- [소프트웨어 개발 철학](./../sw/README.md)
-- [프로그래밍 언어](../program-langs/README.md)
-- [런타임](../runtime/deno/README.md)
+- 무언가 매일 꾸준히 한다는 것은 좋은 경험이었다.
+- 하지만 til 을 위해 억지로 배울 것을 끄집어 내는 것은 좋지 못하다.
+- 성향 차이가 있겠으나 나는 `오늘` 무언가를 배우는 것보다, 언제가 되었든 실질적으로 `배우는 것`에 집중하는 게 적합한것 같다.
+- 일을 위한 일을 만드는 것처럼, 메인 과제와 무관한 무언가에 시간을 쏟게 되는 것이 안타까웠다.
 
 ## 참고
 
-- [markdownlint](https://github.com/DavidAnson/markdownlint) 를 사용
-- [vuepress2](https://vuepress2.netlify.app/)를 사용
-- markdown-it
-  - markdown-it-footnote
+[이전 README](./prev-readme.md)
