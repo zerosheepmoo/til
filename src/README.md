@@ -5,12 +5,9 @@ heroAlt: til-logo
 heroText: TIL
 tagline: Today I Learned
 actions:
-  - text: 둘러보기
+  - text: 안내
     link: /study/
     type: primary
-  - text: 리뷰
-    link: /review/
-    type: secondary
 features:
   - title: Steady
     details: 꾸준하게
